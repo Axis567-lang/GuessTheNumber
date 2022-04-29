@@ -1,18 +1,52 @@
 import React from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Button } from 'react-native-web';
+import Card from '../components/Card.js'
+import Colors from '../constants/Colors.js';
+import Input from '../components/Input.js';
 
 const StartGameScreen = () => {
+
+  // manejar el edo de la app
+  const [first, setfirst] = useState('')
+  const numberInputHandler = input =>
+  {
+                        // expresión regular
+    setfirst(input.replace(/[^0-9]/g, ''))
+  }
+
   return (
     <View style={styles.screen}>
+        
+        <Card>
         <Text style={styles.title}>Select a Number</Text>
-        <View style={styles.inputContainer}>
-          <TextInput />
+          <Input
+            style={style.input}
+            blurOnSubmit //Android
+            autoCapitalize = 'none'
+            autoCorrect={false}
+            keyboardType='number-pad'
+            maxLength = {2}
+            onChangeText={numberInputHandler}
+            value={first}
+          />
           <View style={styles.buttonContainer}>
-            <Button style={styles.button} title="Reset"/>
-            <Button style={styles.button} title="Confirm"/>
+            <Button 
+              style={styles.button}
+              title="Reset"
+              color={Colors.secondary}
+              onPress = {()=>{}}
+            />
+            <View>
+              <Button
+                style={styles.button}
+                title="Confirm"
+                color={Colors.primary}
+                onPress = {()=>{}}
+              />
+            </View>
           </View>
-        </View>
+        </Card>
     </View>
   )
 }
@@ -31,30 +65,23 @@ const styles = StyleSheet.create
       fontSize: 20,
       marginVertical: 10
     },
-    inputContainer:
-    {
-      width: 300,
-      maxWidth: '80%',
-      alignItems: 'center',
-      shadowColor: 'black',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: .26,
-      shadowRadius: 6,
-      // este shadow sólo funciona en iOS lol
-      backgroundColor: 'white',
-      //  only android
-      elevation: 5,
-      padding: 20,
-      borderRadius: 10
-    },
     button:
     {
-
+      width: '100%'
     },
     buttonContainer:
     {
       flexDirection: 'row',
-      flex: 1
+      width: '100%',
+      justifyContent: 'space-between',
+      paddingHorizontal: 15
+
+    },
+    // input personalizado
+    input:
+    {
+      width: 50,
+      textAlign: 'center'
     }
 })
 
