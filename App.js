@@ -31,7 +31,7 @@ export default function App()
     }
     else if (selectedNumber && numberOfGuesses > 0)
     {
-        content = <GameOverScreen numberOfGuesses={numberOfGuesses} />
+        content = <GameOverScreen rounds={numberOfGuesses} />
     }
      
 
