@@ -1,10 +1,12 @@
 import React from 'react'
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-function GameOverScreen() {
+const GameOverScreen = ({ rounds }) =>
+{
   return (
     <View style={styles.screen}>
         <Text>The game is over</Text>
+        <Text>Took me: {rounds} rounds</Text>
     </View>
   )
 }
