@@ -1,18 +1,56 @@
 import React from 'react'
+import { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Button } from 'react-native-web';
 import Card from '../components/Card.js'
 import Colors from '../constants/Colors.js';
 import Input from '../components/Input.js';
 
-const StartGameScreen = () => {
+const StartGameScreen = (onStartGame) => {
 
   // manejar el edo de la app
   const [first, setfirst] = useState('')
+  const [confirm, setConfirm] = useState(false)
+  const [selectedNumber, setSelectedNumber] = useState(undefined)
+
+
   const numberInputHandler = input =>
   {
                         // expresión regular
     setfirst(input.replace(/[^0-9]/g, ''))
+  }
+
+  const resetInputHandler = () =>
+  {
+    setfirst('')
+    setConfirm(false)
+  }
+
+  const confirmInputHandler = () =>
+  {
+    const chosenNumber = parseInt(first);
+    if(isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) return
+    
+    setConfirm(true)
+    setSelectedNumber(chosenNumber)
+    setfirst('')
+  }
+
+  let confirmedOutput;
+
+  if(confirm)
+  {
+    confirmedOutput =
+    (
+      <Card style = {styles.selectedContainer}>
+        <Text>You selected: </Text>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <Button
+        title = 'Ready to start the game?'
+        onPress= { () => onStartGame(selectedNumber)}
+        />
+      </Card>
+    )
   }
 
   return (
@@ -35,24 +73,31 @@ const StartGameScreen = () => {
               style={styles.button}
               title="Reset"
               color={Colors.secondary}
-              onPress = {()=>{}}
+              onPress = {resetInputHandler}
             />
             <View>
               <Button
                 style={styles.button}
                 title="Confirm"
                 color={Colors.primary}
-                onPress = {()=>{}}
+                onPress = {confirmInputHandler}
               />
             </View>
           </View>
         </Card>
+        {confirmedOutput}
     </View>
   )
 }
 
 const styles = StyleSheet.create
 ({
+    selectedContainer:
+    {
+      marginTop: 20,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
     screen:
     {
       flex: 1,
@@ -83,6 +128,6 @@ const styles = StyleSheet.create
       width: 50,
       textAlign: 'center'
     }
-})
+});
 
 export default StartGameScreen

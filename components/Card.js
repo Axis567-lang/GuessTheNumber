@@ -4,7 +4,7 @@ import { View } from 'react-native'
 const Card = ({children, style}) => 
 {
   return (
-    <View style={[styles.card]}>
+    <View style={[styles.card, style]}>
         {children}
     </View>
   )
